@@ -6,11 +6,11 @@ class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
 
     name = models.CharField(max_length=100)
-    abstract = models.TextField(max_length=1000)
+    abstract = models.TextField(max_length=5000)
     year = models.IntegerField()
     authors = models.ManyToManyField("Author")
     researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
-    venue = models.CharField(max_length=50)
+    venue = models.CharField(max_length=300)
     pdf = models.FileField(default=' ', upload_to='media/',
                            verbose_name="Research Paper")
     peerReview = models.FileField(
@@ -54,8 +54,8 @@ class ResearchGroup(models.Model):
     """This class represents a research group, derived from the Model class."""
 
     name = models.CharField(max_length=100)
-    papers = models.ManyToManyField(Paper)
-    authors = models.ManyToManyField(Author)
+    papers = models.ManyToManyField(Paper,blank=True)
+    authors = models.ManyToManyField(Author,blank=True)
 
     class Meta:
         ordering = ['name']
