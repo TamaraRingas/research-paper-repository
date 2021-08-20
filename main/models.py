@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+
 class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
 
@@ -45,23 +46,24 @@ class Author(models.Model):
         return reverse('author-detail', args=[str(self.id)])
 
     def __str__(self):
-        """String representation of Author object"""
+        """Formatted string representation of Author object"""
         return f'{self.surname}, {self.name}'
 
+
 class ResearchGroup(models.Model):
-  """This class represents a research group, derived from the Model class."""
+    """This class represents a research group, derived from the Model class."""
 
-  name = models.CharField(max_length=100)
-  papers = models.ManyToManyField(Paper)
-  authors = models.ManyToManyField(Author)
+    name = models.CharField(max_length=100)
+    papers = models.ManyToManyField(Paper)
+    authors = models.ManyToManyField(Author)
 
-  class Meta:
+    class Meta:
         ordering = ['name']
 
-  def get_absolute_url(self):
-    """Returns the url to access a particular research group."""       
-    return reverse('author-detail', args=[str(self.id)])
+    def get_absolute_url(self):
+        """Returns the url to access a particular research group."""
+        return reverse('author-detail', args=[str(self.id)])
 
-  def __str__(self):
-    """String representation of ResearchGroup object"""
-    return self.name
+    def __str__(self):
+        """String representation of ResearchGroup object"""
+        return self.name
