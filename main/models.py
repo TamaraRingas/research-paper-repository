@@ -7,8 +7,8 @@ class Paper(models.Model):
     name = models.CharField(max_length=100)
     abstract = models.TextField(max_length=1000)
     year = models.IntegerField()
-    authors = models.ManyToManyField("Author", blank=True)
-    #researchGroup = models.ManyToManyField()
+    authors = models.ManyToManyField("Author")
+    researchGroup = models.ManyToManyField("ResearchGroup")
     venue = models.CharField(max_length=50)
     pdf = models.FileField(default=' ', upload_to='media/',
                            verbose_name="Research Paper")
