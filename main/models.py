@@ -9,12 +9,12 @@ class Paper(models.Model):
     abstract = models.TextField(max_length=1000)
     year = models.IntegerField()
     authors = models.ManyToManyField("Author")
-    researchGroup = models.ManyToManyField("ResearchGroup")
+    researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
     venue = models.CharField(max_length=50)
     pdf = models.FileField(default=' ', upload_to='media/',
                            verbose_name="Research Paper")
     peerReview = models.FileField(
-        default=' ', upload_to='media/', verbose_name="Proof of Peer Review")
+        default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
 
     # Order reserach papers by year (descending) then by authors.
     class Meta:
