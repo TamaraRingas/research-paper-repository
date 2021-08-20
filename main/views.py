@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from main.models import Page
+from main.models import Page, Author 
 import requests
 
 
