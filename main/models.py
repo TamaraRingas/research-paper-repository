@@ -15,8 +15,14 @@ class Paper(models.Model):
     peerReview = models.FileField(
         default=' ', upload_to='media/', verbose_name="Peer Review")
 
-    class Meta:
+    class Meta: 
         ordering = ['-year', 'authors']
 
+    def get_absolute_url(self):
+      """Returns the url to access a particular research paper."""
+      return reverse('page-detail', args=[str(self.id)])
+
     def __str__(self):
-        return self.name
+        return self.name 
+
+
