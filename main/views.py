@@ -25,7 +25,7 @@ def index(request):
 
 class PaperListView(generic.ListView):
     model = Paper
-    paginate_by = 20
+    #paginate_by = 20
 
     def get_queryset(self):  # Filter results by input query.
       query = self.request.GET.get('query', None)
@@ -38,4 +38,3 @@ class PaperListView(generic.ListView):
 
 class PaperDetailView(generic.DetailView):
   model = Paper
-  
