@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Research Paper: {{ paper.name }}</h1>
+<p>Abstract: {{ paper.abstract }}</p>
+<p> 
+  <strong>Authors: </strong>
+  {% for author in paper.authors.all %}
+  {{author.name}} {{author.surname}}
+  {% endfor %}
+</p>
+<p><strong>Published in: </strong>{{paper.year}}</p>
+<p><strong>Published at: </strong>{{paper.venue}}</p>
+<p><strong>Research Group: </strong>{{paper.research_group}}</p>
+<p><strong>Institutions: </strong>{{paper.institution}}</p>
+<!Add proof of peer review if logged in>
+<p><strong>Download: </strong> <a href="/media/Tollon2021_Article_ArtifactsAndAffordances.pdf"
+    download="download">Download </a></p>
+{% endblock content %} 

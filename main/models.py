@@ -1,46 +1,11 @@
 from django.db import models
 from django.urls import reverse
-
-
-class Paper(models.Model):
-    """This class represents a research paper uploaded to our database, derived from the Model class."""
-
-    name = models.CharField(max_length=100)
-    abstract = models.TextField(max_length=5000)
-    year = models.IntegerField()
-    authors = models.ManyToManyField("Author")
-    researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
-    institution = models.CharField(max_length=100, blank=True)
-    venue = models.CharField(max_length=300)
-    pdf = models.FileField(default=' ', upload_to='media/',
-                           verbose_name="Research Paper")
-    peerReview = models.FileField(
-        default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
-
-    # Order reserach papers by year (descending) then by authors.
-    class Meta:
-        ordering = ['-year']
-        #order_with_respect_to = 'year', 'authors'
-
-    def get_absolute_url(self):
-        """Returns the url to access a particular research paper."""
-        return reverse('paper-detail', args=[str(self.id)])
-
-    def __str__(self):
-        """String representation of Paper object"""
-        return self.name
-
-    def display_authors(self):
-      """Create a string for the Authors. This is required to display authors in Admin."""
-      return ', '.join(authors.surname for authors in self.authors.all()[:3])
-
-
 class Author(models.Model):
     """This class represents an author, derived from the Model class"""
 
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
+    researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
     
     # Order authors by their surnames.
@@ -74,3 +39,39 @@ class ResearchGroup(models.Model):
     def __str__(self):
         """String representation of ResearchGroup object"""
         return self.name
+
+
+
+class Paper(models.Model):
+    """This class represents a research paper uploaded to our database, derived from the Model class."""
+
+    name = models.CharField(max_length=100)
+    abstract = models.TextField(max_length=5000)
+    year = models.IntegerField()
+    authors = models.ManyToManyField(Author)
+    research_group = models.CharField(max_length=500, null = True, blank=True)
+    institution = models.CharField(max_length=100, blank=True)
+    venue = models.CharField(max_length=300)
+    pdf = models.FileField(default=' ', upload_to='media/',
+                           verbose_name="Research Paper")
+    peerReview = models.FileField(
+        default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
+
+    # Order reserach papers by year (descending) then by authors.
+    class Meta:
+        ordering = ['-year']
+        #order_with_respect_to = 'year', 'authors'
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular research paper."""
+        return reverse('paper-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String representation of Paper object"""
+        return self.name
+
+    def display_authors(self):
+      """Create a string for the Authors. This is required to display authors in Admin."""
+      return ', '.join(authors.surname for authors in self.authors.all()[:3])
+
+    

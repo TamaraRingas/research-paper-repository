@@ -21,3 +21,21 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+
+class PaperListView(generic.ListView):
+    model = Paper
+    paginate_by = 20
+
+    def get_queryset(self):  # Filter results by input query.
+      query = self.request.GET.get('query', None)
+
+      if query:
+        return Paper.objects.filter(name__icontains=query)
+
+      else:
+        return Paper.objects.all()
+
+class PaperDetailView(generic.DetailView):
+  model = Paper
+  

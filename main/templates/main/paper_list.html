@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Research Paper List</h1>
+{% if paper_list %}
+<ul>
+  {% for paper in paper_list %}
+  <li>
+    <a href="{{ paper.get_absolute_url }}">{{ paper.name}}</a> 
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>There are no papers here yet.</p>
+{% endif %}
+{% endblock %}
