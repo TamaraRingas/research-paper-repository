@@ -38,3 +38,21 @@ class PaperListView(generic.ListView):
 
 class PaperDetailView(generic.DetailView):
   model = Paper
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    #paginate_by = 20
+
+    def get_queryset(self):  # Filter results by input query.
+      query = self.request.GET.get('query', None)
+
+      if query:
+        return Author.objects.filter(name__icontains=query)
+
+      else:
+        return Author.objects.all()
+
+
+class AuthorDetailView(generic.DetailView):
+  model = Author
