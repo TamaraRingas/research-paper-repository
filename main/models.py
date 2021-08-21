@@ -18,7 +18,8 @@ class Paper(models.Model):
 
     # Order reserach papers by year (descending) then by authors.
     class Meta:
-        ordering = ['-year', 'authors']
+        ordering = ['-year']
+        #order_with_respect_to = 'year', 'authors'
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""
@@ -38,7 +39,7 @@ class Author(models.Model):
 
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    papers = models.ManyToManyField(Paper, blank=True)
+    #papers = models.ManyToManyField(Paper, blank=True)
     #researchGroup = models.ManyToManyField()
 
     # Order authors by their surnames.
@@ -53,13 +54,16 @@ class Author(models.Model):
         """Formatted string representation of Author object"""
         return f'{self.surname}, {self.name}'
 
+    def ordered_authors(self):
+        "Return an ordered set of authors"
+        return self.authors.all().order_by('surname')
 
 class ResearchGroup(models.Model):
     """This class represents a research group, derived from the Model class."""
 
     name = models.CharField(max_length=100)
-    papers = models.ManyToManyField(Paper,blank=True)
-    authors = models.ManyToManyField(Author,blank=True)
+    #papers = models.ManyToManyField(Paper,blank=True)
+    #authors = models.ManyToManyField(Author,blank=True)
 
     class Meta:
         ordering = ['name']

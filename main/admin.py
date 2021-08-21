@@ -8,7 +8,7 @@ class PaperAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-  pass
+  list_display = ('surname','name', )
 @admin.register(ResearchGroup)
 class ResearchGroupAdmin(admin.ModelAdmin):
   pass
