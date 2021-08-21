@@ -4,7 +4,7 @@ from .models import Paper, Author, ResearchGroup
 """Models registered here"""
 @admin.register(Paper)
 class PaperAdmin(admin.ModelAdmin):
-  pass
+  list_display = ('name','display_authors','abstract','year','venue','pdf','peerReview')
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):

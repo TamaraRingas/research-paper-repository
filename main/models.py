@@ -28,6 +28,10 @@ class Paper(models.Model):
         """String representation of Paper object"""
         return self.name
 
+    def display_authors(self):
+      """Create a string for the Authors. This is required to display authors in Admin."""
+      return ', '.join(authors.surname for authors in self.authors.all()[:3])
+
 
 class Author(models.Model):
     """This class represents an author, derived from the Model class"""
