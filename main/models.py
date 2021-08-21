@@ -18,7 +18,7 @@ class Paper(models.Model):
 
     # Order reserach papers by year (descending) then by authors.
     class Meta:
-        ordering = ['-year']
+        ordering = ['-year', 'authors']
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""
