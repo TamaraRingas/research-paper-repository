@@ -10,6 +10,7 @@ class Paper(models.Model):
     year = models.IntegerField()
     authors = models.ManyToManyField("Author")
     researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
+    institution = models.CharField(max_length=100, blank=True)
     venue = models.CharField(max_length=300)
     pdf = models.FileField(default=' ', upload_to='media/',
                            verbose_name="Research Paper")
@@ -39,9 +40,9 @@ class Author(models.Model):
 
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    #papers = models.ManyToManyField(Paper, blank=True)
-    #researchGroup = models.ManyToManyField()
-
+    researchGroup = models.ManyToManyField("ResearchGroup", blank=True)
+    institution = models.CharField(max_length=100, blank=True)
+    
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
@@ -62,8 +63,6 @@ class ResearchGroup(models.Model):
     """This class represents a research group, derived from the Model class."""
 
     name = models.CharField(max_length=100)
-    #papers = models.ManyToManyField(Paper,blank=True)
-    #authors = models.ManyToManyField(Author,blank=True)
 
     class Meta:
         ordering = ['name']
