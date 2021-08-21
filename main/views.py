@@ -13,7 +13,7 @@ def index(request):
     num_research_groups = ResearchGroup.objects.all().count()
 
     context = {
-        'num_paper': num_papers,
+        'num_papers': num_papers,
         'num_authors': num_authors,
         'num_research_groups': num_research_groups,
         
