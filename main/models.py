@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 class Author(models.Model):
     """This class represents an author, derived from the Model class"""
 
@@ -7,7 +8,7 @@ class Author(models.Model):
     surname = models.CharField(max_length=50)
     researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
-    
+    papers = models.ManyToManyField('Paper', blank=True)
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
@@ -56,6 +57,8 @@ class Paper(models.Model):
                            verbose_name="Research Paper")
     peerReview = models.FileField(
         default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Order reserach papers by year (descending) then by authors.
     class Meta:

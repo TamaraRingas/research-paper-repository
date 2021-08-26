@@ -2,7 +2,13 @@
 
 {% block content %}
 <h1>Author List</h1>
+
 {% if author_list %}
+<form action="." method="get">
+  <label for="query">Search Authors</label>
+  <input type="text" name="query" id="query">
+  <input type="submit" value="Search">
+</form>
 <ul>
   {% for author in author_list %}
   <li>

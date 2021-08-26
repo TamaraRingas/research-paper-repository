@@ -2,7 +2,13 @@
 
 {% block content %}
 <h1>Research Paper List</h1>
+
 {% if paper_list %}
+<form action="." method="get">
+  <label for="query">Search Research Papers</label>
+  <input type="text" name="query" id="query">
+  <input type="submit" value="Search">
+</form>
 <ul>
   {% for paper in paper_list %}
   <li>

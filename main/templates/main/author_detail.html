@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Author: {{ author.surname }}</h1>
+<p>
+  <strong>Papers: </strong>
+  {% for paper in author.papers.all %}
+  {{paper.name}} 
+  {% endfor %}
+</p>
+<p><strong>Institution: </strong>{{author.institution}}</p>
+<p><stong>Research Group: </stong>{{author.researchGroup}}</p>
+  {% endblock content %}

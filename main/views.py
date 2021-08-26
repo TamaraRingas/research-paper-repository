@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from main.models import Paper, Author, ResearchGroup
+from django.db.models import Q
 import requests
 
 
@@ -23,6 +24,9 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
+def faq_view(request):
+  return render(request, 'faq.html')
+
 class PaperListView(generic.ListView):
     model = Paper
     #paginate_by = 20
@@ -31,7 +35,7 @@ class PaperListView(generic.ListView):
       query = self.request.GET.get('query', None)
 
       if query:
-        return Paper.objects.filter(name__icontains=query)
+        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__contains=query) 
 
       else:
         return Paper.objects.all()
@@ -48,10 +52,12 @@ class AuthorListView(generic.ListView):
       query = self.request.GET.get('query', None)
 
       if query:
-        return Author.objects.filter(name__icontains=query)
+        return Author.objects.filter(surname__icontains=query) | Author.objects.filter(name__icontains=query)
+        
 
       else:
         return Author.objects.all()
+
 
 
 class AuthorDetailView(generic.DetailView):
