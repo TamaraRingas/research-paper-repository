@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from main.models import Paper, Author, ResearchGroup
+from .filters import PaperFilter
 from django.db.models import Q
 import requests
 
@@ -21,7 +22,7 @@ def index(request):
     }
 
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html', context=context)
+    return render(request, 'paper_list.html', context=context)
 
 
 def faq_view(request):
@@ -39,6 +40,11 @@ class PaperListView(generic.ListView):
 
       else:
         return Paper.objects.all()
+
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context['filter'] = PaperFilter(self.request.GET, queryset=self.get_queryset())
+      return context 
 
 class PaperDetailView(generic.DetailView):
   model = Paper

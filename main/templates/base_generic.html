@@ -7,7 +7,7 @@
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <!-- Add additional CSS in static file -->
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
   <div class="container-fluid">
@@ -15,9 +15,8 @@
       <div class="col-sm-2">
         {% block sidebar %}
         <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-          <li><a href="{% url 'papers' %}">All Research Papers</a></li>
-          <li><a href="{% url 'authors' %}">All Authors</a></li>
+          <li><a href="{% url 'papers' %}">Research Papers</a></li>
+          <li><a href="{% url 'authors' %}">Authors</a></li>
           <li><a href="{% url 'faq' %}">FAQ</a></li>
         </ul>
         {% endblock %}
