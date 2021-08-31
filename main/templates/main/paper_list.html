@@ -12,17 +12,16 @@
 <ul>
   {% for paper in paper_list %}
   <li>
-    <a href="{{ paper.get_absolute_url }}"><strong>{{ paper.name}}</strong></a> 
-    <ul>
-      <li>{{paper.year}}</li>
-      <li>{{paper.venue}}</li>
-      <li>{{paper.research_group}}</li>
-      <li>{{paper.institution}}</li>
-      <li>{{paper.abstract}}</li>
+    <h4>{{paper.name}}</h4>
+      <li><strong>Author(s): </strong></li>
+      <li><strong>Published: </strong>{{paper.year}}</li>
+      <li><strong>Research Groups(s): </strong>{{paper.research_group}}</li>
+      <li><strong>Institution(s): </strong>{{paper.institution}}</li>
+      <li><strong>Venue: </strong>{{paper.venue}}</li>
+      <li><strong>Abstract: </strong>{{paper.abstract}}</li>
       <li><strong> <a
         href="https://cbib.s3.sa-east-1.amazonaws.com/{{paper.pdf}}"
         download="download">Download </a></strong></li>
-    </ul>
   </li>
   {% endfor %}
 </ul>
