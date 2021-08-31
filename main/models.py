@@ -46,10 +46,10 @@ class ResearchGroup(models.Model):
 class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
 
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     abstract = models.TextField(max_length=5000)
     year = models.IntegerField()
-    authors = models.ManyToManyField(Author)
+    authors = models.CharField(max_length=2000, null=True)
     research_group = models.CharField(max_length=500, null = True, blank=True)
     institution = models.CharField(max_length=100, blank=True)
     venue = models.CharField(max_length=300)

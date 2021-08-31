@@ -5,6 +5,6 @@ class PaperFilter(django_filters.FilterSet):
 
   class Meta:
     model = Paper
-    fields = ('name','abstract', 'year', 'authors', 'research_group', 'institution', 'venue')
+    fields = ('title','abstract', 'year', 'authors', 'research_group', 'institution', 'venue')
 
   
