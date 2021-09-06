@@ -1,3 +1,4 @@
+from os import name
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ class Author(models.Model):
     surname = models.CharField(max_length=50)
     researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
-    papers = models.ManyToManyField('Paper', blank=True)
+    #papers = models.ManyToManyField('Paper', blank=True)
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
@@ -46,10 +47,10 @@ class ResearchGroup(models.Model):
 class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
 
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     abstract = models.TextField(max_length=5000)
     year = models.IntegerField()
-    authors = models.CharField(max_length=2000, null=True)
+    authors = models.ManyToManyField(Author)
     research_group = models.CharField(max_length=500, null = True, blank=True)
     institution = models.CharField(max_length=100, blank=True)
     venue = models.CharField(max_length=300)

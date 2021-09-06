@@ -16,10 +16,14 @@ Filter Research Papers
 </form>
 
 <ul>
-  {% for paper in filter.qs %}
+  {% for paper in paper_list %}
   <li>
     <h4>{{paper.name}}</h4>
-      <li><strong>Author(s): </strong></li>
+      <li><strong>Author(s): </strong>
+      {% for author in paper.authors.all %}
+        {{author.name}} {{author.surname}},
+      {% endfor %}
+      </li>
       <li><strong>Published: </strong>{{paper.year}}</li>
       <li><strong>Research Groups(s): </strong>{{paper.research_group}}</li>
       <li><strong>Institution(s): </strong>{{paper.institution}}</li>

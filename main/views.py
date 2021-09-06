@@ -30,13 +30,13 @@ def faq_view(request):
 
 class PaperListView(generic.ListView):
     model = Paper
-    #paginate_by = 20
+    author_list = Author.objects.all()
 
     def get_queryset(self):  # Filter results by input query.
       query = self.request.GET.get('query', None)
-
+      
       if query:
-        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__contains=query) 
+        return Paper.objects.filter(title__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__contains=query) 
 
       else:
         return Paper.objects.all()

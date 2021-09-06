@@ -10,17 +10,15 @@
   <input type="submit" value="Search">
 </form>
 
-<form action="." method ="GET">
-  <label for="filter">Filter Research Papers</label>
-  {{filter.form|bootstrap}}
-  <input type="submit" value="Filter>
-</form>
 
 <ul>
-  {% for paper in filter.qs %}
+  {% for paper in paper_list %}
   <li>
     <h4>{{paper.name}}</h4>
-      <li><strong>Author(s): </strong></li>
+      <li><strong>Author: </strong>
+      {% for author in paper.authors.all %}
+        {{author.name}},
+      {% endfor %}</li>
       <li><strong>Published: </strong>{{paper.year}}</li>
       <li><strong>Research Groups(s): </strong>{{paper.research_group}}</li>
       <li><strong>Institution(s): </strong>{{paper.institution}}</li>
