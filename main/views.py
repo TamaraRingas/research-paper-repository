@@ -3,6 +3,7 @@ from django.views import generic
 from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
 from django.db.models import Q
+from itertools import chain
 import requests
 
 
@@ -36,7 +37,7 @@ class PaperListView(generic.ListView):
       query = self.request.GET.get('query', None)
       
       if query:
-        return Paper.objects.filter(title__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__contains=query) 
+        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__contains=query) 
 
       else:
         return Paper.objects.all()

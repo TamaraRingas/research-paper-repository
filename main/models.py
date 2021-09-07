@@ -24,7 +24,7 @@ class Author(models.Model):
 
     def ordered_authors(self):
         "Return an ordered set of authors"
-        return self.authors.all().order_by('surname')
+        return self.objects.all().order_by('surname')
 
 class ResearchGroup(models.Model):
     """This class represents a research group, derived from the Model class."""
@@ -60,11 +60,11 @@ class Paper(models.Model):
         default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
+    #author_list = Author.ordered_authors(Author)
 
-    # Order reserach papers by year (descending) then by authors.
+    # Order research papers by year (descending) then by authors.
     class Meta:
-        ordering = ['-year']
-        #order_with_respect_to = 'year', 'authors'
+        ordering = ['-year','authors__surname', ]
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""
@@ -78,4 +78,7 @@ class Paper(models.Model):
       """Create a string for the Authors. This is required to display authors in Admin."""
       return ', '.join(authors.surname for authors in self.authors.all()[:3])
 
+    def ordered_authors(self):
+        "Return an ordered set of authors"
+        return self.authors.all().order_by('surname')
     
