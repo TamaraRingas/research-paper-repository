@@ -9,7 +9,8 @@ class Author(models.Model):
     surname = models.CharField(max_length=50)
     researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
-    #papers = models.ManyToManyField('Paper', blank=True)
+    papers = models.ManyToManyField('Paper', blank=True)
+    
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
@@ -25,6 +26,10 @@ class Author(models.Model):
     def ordered_authors(self):
         "Return an ordered set of authors"
         return self.objects.all().order_by('surname')
+
+    def display_papers(self):
+      """Create a string for the Papers. This is required to display papers in Admin & on detail page."""
+      return ', '.join(papers.name for papers in self.papers.all()[:3])
 
 class ResearchGroup(models.Model):
     """This class represents a research group, derived from the Model class."""
