@@ -150,4 +150,4 @@ AWS_STORAGE_BUCKET_NAME = 'cbib'
 
 AWS_QUERYSTRING_AUTH = False
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
