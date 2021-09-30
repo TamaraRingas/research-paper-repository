@@ -66,3 +66,21 @@ class AddPaperForm(ModelForm):
             'peerReview': 'Peer Review',
         }
 
+
+class AddAuthorForm(forms.ModelForm):
+    def clean_name(self):
+        data = self.cleaned_data['name']
+        return data
+
+    def clean_surname(self):
+        surname_data = self.cleaned_data['surname']
+        return surname_data
+
+    class Meta:
+        model = Author
+        fields = ('name', 'surname', )
+        labels = {
+            'name': 'Name',
+            'surname': 'Surname',
+        }
+

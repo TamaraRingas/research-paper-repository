@@ -9,11 +9,12 @@ class Author(models.Model):
     surname = models.CharField(max_length=50)
     researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
-    papers = models.ManyToManyField('Paper', blank=True)
+    papers = models.ManyToManyField('Paper')
     
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
+        permissions = (("can_add_author", "can_modify_author"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular author."""
@@ -69,7 +70,8 @@ class Paper(models.Model):
 
     # Order research papers by year (descending) then by authors.
     class Meta:
-        ordering = ['-year','authors__surname', ]
+        ordering = ['-year', ]
+        permissions = (("can_add_paper", "can_modify_paper"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""

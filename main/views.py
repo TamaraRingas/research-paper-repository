@@ -1,11 +1,14 @@
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import generic
 from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from main.forms import AddPaperForm
+from main.forms import AddPaperForm, AddAuthorForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from itertools import chain
 import requests
@@ -83,7 +86,8 @@ class PaperCreateView(CreateView):
             'research_group', 'institution', 'venue', 'pdf', 'peerReview']
 
 @login_required
-def create_view(request):
+@permission_required('main.can_add_paper')
+def create_paper_view(request):
     # dictionary for initial data with
     # field names as keys
     context = {}
@@ -92,6 +96,24 @@ def create_view(request):
     form = AddPaperForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return HttpResponseRedirect(reverse('papers'))
 
     context['form'] = form
     return render(request, "paper_form.html", context)
+
+
+@login_required
+@permission_required('main.can_add_author')
+def create_author_view(request):
+    # dictionary for initial data with
+    # field names as keys
+    context = {}
+
+    # add the dictionary during initialization
+    form = AddAuthorForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('papers'))
+
+    context['form'] = form
+    return render(request, "author_form.html", context)

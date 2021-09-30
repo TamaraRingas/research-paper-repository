@@ -5,9 +5,9 @@
 <p>
   <strong>Papers: </strong>
   {% for paper in author.papers.all %}
-  {{paper.name}} 
+  {{paper.name}}, 
   {% endfor %}
 </p>
 <p><strong>Institution: </strong>{{author.institution}}</p>
-<p><stong>Research Group: </stong>{{author.researchGroup}}</p>
+<p><strong>Research Group: </strong>{{author.researchGroup}}</p>
   {% endblock content %}
