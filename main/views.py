@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from main.forms import AddPaperForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -71,3 +73,10 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
   model = Author
+
+
+# View class to display PaperCreate Form, extended from CreateView class.
+class PaperCreate(CreateView):
+  model = Paper
+  fields = ['name', 'abstract', 'year', 'authors',
+            'research_group', 'institution', 'venue', 'pdf', 'peerReview']

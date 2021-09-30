@@ -17,6 +17,7 @@
         <ul class="sidebar-nav">
           <li><a href="{% url 'papers' %}">Research Papers</a></li>
           <li><a href="{% url 'authors' %}">Authors</a></li>
+          <li><a href="{% url 'paper_create'%}">Add Paper</a></li>
           <li><a href="{% url 'faq' %}">FAQ</a></li>
           {% if user.is_authenticated %}
           <li>User: {{ user.get_username }}</li>

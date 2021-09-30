@@ -5,10 +5,10 @@ from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 import requests
-from main.models import Paper
+from main.models import Paper, Author
 
 class AddPaperForm(ModelForm):
-  
+
     def clean_name(self):  # Override clean_data method from ModelForm class.
         data = self.cleaned_data['name']
 

@@ -12,5 +12,6 @@ urlpatterns = [
     path('paper/<int:pk>', views.PaperDetailView.as_view(), name='paper-detail'),
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
+    path('paper/create/', views.PaperCreate.as_view(), name='paper_create'),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
