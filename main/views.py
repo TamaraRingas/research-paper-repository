@@ -4,7 +4,7 @@ from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from main.forms import AddPaperForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from itertools import chain
@@ -76,7 +76,22 @@ class AuthorDetailView(generic.DetailView):
 
 
 # View class to display PaperCreate Form, extended from CreateView class.
-class PaperCreate(CreateView):
+
+class PaperCreateView(CreateView):
   model = Paper
   fields = ['name', 'abstract', 'year', 'authors',
             'research_group', 'institution', 'venue', 'pdf', 'peerReview']
+
+@login_required
+def create_view(request):
+    # dictionary for initial data with
+    # field names as keys
+    context = {}
+
+    # add the dictionary during initialization
+    form = AddPaperForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context['form'] = form
+    return render(request, "paper_form.html", context)
