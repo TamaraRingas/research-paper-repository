@@ -11,4 +11,5 @@
 </p>
 <p><strong>Institution: </strong>{{author.institution}}</p>
 <p><strong>Research Group: </strong>{{author.researchGroup}}</p>
+<a href="{% url 'author_delete' pk=author.pk %}">Delete Author</a>
   {% endblock content %}

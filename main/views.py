@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -131,3 +131,11 @@ class AuthorUpdate(PermissionRequiredMixin, UpdateView):
   model = Author
   permission_required = 'main.can_modify_author'
   fields = ['name', 'surname', 'papers']
+
+
+# View class to display VideoDelete Form, extended from DeleteView class.
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+  model = Author
+  permission_required = 'main.can_modify_author'
+  # If successful deletion, return to video list page.
+  success_url = reverse_lazy('videos')
