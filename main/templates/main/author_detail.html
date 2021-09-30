@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>{{author.name}} {{ author.surname }} </h1>
+<a href="{% url 'author_update' pk=author.pk %}">Update Author</a>
 <p>
   <strong>Papers: </strong>
   {% for paper in author.papers.all %}

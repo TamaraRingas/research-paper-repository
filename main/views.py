@@ -7,7 +7,7 @@ from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from main.forms import AddPaperForm, AddAuthorForm
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from itertools import chain
@@ -120,24 +120,14 @@ def create_author_view(request):
     return render(request, "author_form.html", context)
 
 
-def update_paper_view(request, id):
-    # dictionary for initial data with
-    # field names as keys
-    context = {}
+# View class to display PaperUpdate Form, extended from UpdateView class.
+class PaperUpdate(PermissionRequiredMixin, UpdateView):
+  model = Paper
+  permission_required = 'main.can_modify_paper'
+  fields = ['name', 'abstract', 'year', 'authors',
+            'research_group', 'institution', 'venue', 'pdf', 'peerReview',]
 
-    # fetch the object related to passed id
-    obj = get_object_or_404(Paper, id=id)
-
-    # pass the object as instance in form
-    form = AddPaperForm(request.POST or None, instance=obj)
-
-    # save the data from the form and
-    # redirect to list of research papers
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect("paper-detail.html")
-
-    # add form dictionary to context
-    context["form"] = form
-
-    return render(request, "update_paper.html", context)
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+  model = Author
+  permission_required = 'main.can_modify_author'
+  fields = ['name', 'surname', 'papers']
