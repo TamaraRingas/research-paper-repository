@@ -18,7 +18,7 @@ Filter Research Papers
 <ul>
   {% for paper in paper_list %}
   <li>
-    <h4>{{paper.name}}</h4>
+    <h4><a href="{{ paper.get_absolute_url }}">{{ paper.name}}</a></h4>
       <li><strong>Author(s): </strong>
       {% for author in paper.authors.all %}
         {{author.name}} {{author.surname}},

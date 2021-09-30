@@ -54,6 +54,7 @@ class PaperListView(generic.ListView):
       context['filter'] = PaperFilter(self.request.GET, queryset=self.get_queryset())
       return context 
 
+
 class PaperDetailView(generic.DetailView):
   model = Paper
 
@@ -117,3 +118,26 @@ def create_author_view(request):
 
     context['form'] = form
     return render(request, "author_form.html", context)
+
+
+def update_paper_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context = {}
+
+    # fetch the object related to passed id
+    obj = get_object_or_404(Paper, id=id)
+
+    # pass the object as instance in form
+    form = AddPaperForm(request.POST or None, instance=obj)
+
+    # save the data from the form and
+    # redirect to list of research papers
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("paper-detail.html")
+
+    # add form dictionary to context
+    context["form"] = form
+
+    return render(request, "update_paper.html", context)
