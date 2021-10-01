@@ -15,6 +15,8 @@ urlpatterns = [
     path('paper/create/', views.create_paper_view, name='paper_create'),
     path('paper/<int:pk>/update/',
          views.PaperUpdate.as_view(), name='paper_update'),
+    path('paper/<int:pk>/delete/',
+         views.PaperDelete.as_view(), name='paper_delete'),
     path('author/create/', views.create_author_view, name='author_create'),
     path('author/<int:pk>/update/',
          views.AuthorUpdate.as_view(), name='author_update'),

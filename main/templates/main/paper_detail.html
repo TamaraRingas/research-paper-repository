@@ -17,4 +17,5 @@
 <!Add proof of peer review if logged in>
 <p><strong>Download: </strong> <a href="https://s3.console.aws.amazon.com/s3/object/cbib?region=sa-east-1&prefix={{paper.pdf}}"
     download="download">Download </a></p>
+<a href="{% url 'paper_delete' pk=paper.pk %}">Delete Paper</a>
 {% endblock content %} 

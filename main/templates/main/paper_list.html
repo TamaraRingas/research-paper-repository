@@ -16,8 +16,10 @@ Filter Research Papers
   <input type="submit" value="Filter">
 </form>
 
+
+<br>
 <ul>
-  {% for paper in paper_list %}
+  {% for paper in filter.qs %}
   <li>
     <h4><a href="{{ paper.get_absolute_url }}">{{ paper.name}}</a></h4>
       <li><strong>Author(s): </strong>
@@ -32,8 +34,9 @@ Filter Research Papers
       <li><strong>Abstract: </strong>{{paper.abstract}}</li>
       <li><strong> <a
         href="https://cbib.s3.sa-east-1.amazonaws.com/{{paper.pdf}}"
-        download="download">Download </a></strong></li>
+        download="download">Download </a></strong></li>    
   </li>
+  <br>
   {% endfor %}
 </ul>
 {% else %}

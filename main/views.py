@@ -13,6 +13,11 @@ from django.db.models import Q
 from itertools import chain
 import requests
 
+from django.http import FileResponse
+import io
+from reportlab.pdfgen import canvas
+from 
+
 
 def index(request):
     """View function for home page of site."""
@@ -133,9 +138,18 @@ class AuthorUpdate(PermissionRequiredMixin, UpdateView):
   fields = ['name', 'surname', 'papers']
 
 
-# View class to display VideoDelete Form, extended from DeleteView class.
+# View class to display AuthorDelete Form, extended from DeleteView class.
 class AuthorDelete(PermissionRequiredMixin, DeleteView):
   model = Author
   permission_required = 'main.can_modify_author'
-  # If successful deletion, return to video list page.
-  success_url = reverse_lazy('videos')
+  # If successful deletion, return to author list page.
+  success_url = reverse_lazy('authors')
+
+
+class PaperDelete(PermissionRequiredMixin, DeleteView):
+  model = Paper
+  permission_required = 'main.can_modify_paper'
+  # If successful deletion, return to research paper list page.
+  success_url = reverse_lazy('papers')
+
+
