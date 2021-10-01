@@ -1,6 +1,6 @@
 from django.core.files.base import File
 from django.urls import reverse_lazy, reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import generic
 from main.models import Paper, Author, ResearchGroup
@@ -15,6 +15,8 @@ from itertools import chain
 import requests
 from django.http import FileResponse
 import io
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter 
@@ -190,3 +192,6 @@ def report(request):
   buf.seek(0)
 
   return FileResponse(buf, as_attachment=True, filename='report.pdf')
+
+
+
