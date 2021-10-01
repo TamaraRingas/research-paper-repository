@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import generic
-from main.models import Paper, Author
+from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from main.forms import AddPaperForm, AddAuthorForm
@@ -153,8 +153,9 @@ class PaperDelete(PermissionRequiredMixin, DeleteView):
   # If successful deletion, return to research paper list page.
   success_url = reverse_lazy('papers')
 
+
 def report(request):
-  # Create Bytestream buffer 
+  # Create Bytestream buffer
   buf = io.BytesIO()
   # Create a canvas
   c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
@@ -170,12 +171,15 @@ def report(request):
   lines.append(" ")
   # Designate model
   papers = Paper.objects.all()
-  
+
   for paper in papers:
     lines.append(paper.name)
-    lines.append(paper.abstract)
+    lines.append("Author(s): ")
+    for author in paper.authors.all():
+      lines.append("-" + author.name + " " + author.surname)
+    lines.append("Published in: " + str(paper.year))
+    lines.append("Published by: " + paper.venue)
     lines.append(" ")
-    
 
   for line in lines:
     textob.textLine(line)
