@@ -14,7 +14,7 @@ class Author(models.Model):
     # Order authors by their surnames.
     class Meta:
         ordering = ['surname']
-        permissions = (("can_add_author", "can_modify_author"),)
+        permissions = (("can_add_author", "Add author"),("can_modify_author", "Modify author"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular author."""
@@ -31,6 +31,24 @@ class Author(models.Model):
     def display_papers(self):
       """Create a string for the Papers. This is required to display papers in Admin & on detail page."""
       return ', '.join(papers.name for papers in self.papers.all()[:3])
+
+class ResearchGroup(models.Model):
+    """This class represents a research group, derived from the Model class."""
+
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['name']
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular research group."""
+        return reverse('author-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String representation of ResearchGroup object"""
+        return self.name
+
+
 
 class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
@@ -53,7 +71,7 @@ class Paper(models.Model):
     # Order research papers by year (descending) then by authors.
     class Meta:
         ordering = ['-year', ]
-        permissions = (("can_add_paper", "can_modify_paper", "can_access_peer_review"),)
+        permissions = (("can_add_paper", "Add paper"),("can_modify_paper", "Modify Paper"), ("peer_review", "Peer Review"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""

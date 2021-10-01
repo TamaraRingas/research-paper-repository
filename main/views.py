@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import generic
-from main.models import Paper, Author, ResearchGroup
+from main.models import Paper, Author
 from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from main.forms import AddPaperForm, AddAuthorForm

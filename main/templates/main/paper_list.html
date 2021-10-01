@@ -15,8 +15,8 @@ Filter Research Papers
   {{filter.form}}
   <input type="submit" value="Filter">
 </form>
-
-
+<a href="{% url 'report' %}">Generate Report</a>
+<br>
 <br>
 <ul>
   {% for paper in filter.qs %}
