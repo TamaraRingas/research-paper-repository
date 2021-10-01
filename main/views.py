@@ -1,3 +1,4 @@
+from django.core.files.base import File
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -12,11 +13,11 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from itertools import chain
 import requests
-
 from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
-from 
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter 
 
 
 def index(request):
@@ -152,4 +153,36 @@ class PaperDelete(PermissionRequiredMixin, DeleteView):
   # If successful deletion, return to research paper list page.
   success_url = reverse_lazy('papers')
 
+def report(request):
+  # Create Bytestream buffer 
+  buf = io.BytesIO()
+  # Create a canvas
+  c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+  # Create a text object
+  textob = c.beginText()
+  textob.setTextOrigin(inch, inch)
+  textob.setFont('Helvetica', 20)
 
+  # Create blank list
+  lines = []
+  lines.append("Research Outcome Report ")
+  lines.append("The following papers meet the filtering criteria: ")
+  lines.append(" ")
+  # Designate model
+  papers = Paper.objects.all()
+  
+  for paper in papers:
+    lines.append(paper.name)
+    lines.append(paper.abstract)
+    lines.append(" ")
+    
+
+  for line in lines:
+    textob.textLine(line)
+
+  c.drawText(textob)
+  c.showPage()
+  c.save()
+  buf.seek(0)
+
+  return FileResponse(buf, as_attachment=True, filename='report.pdf')
