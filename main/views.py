@@ -58,11 +58,32 @@ class PaperListView(generic.ListView):
         return Paper.objects.all()
 
     def get_context_data(self, **kwargs):
+      template_path = 'pdf.html'
       context = super().get_context_data(**kwargs)
       context['filter'] = PaperFilter(self.request.GET, queryset=self.get_queryset())
-      return context 
+      return context
+
+    
 
 
+def show_report(request):
+  def get_queryset(self):  # Filter results by input query.
+      query = self.request.GET.get('query', None)
+
+      if query:
+        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__icontains=query) | Paper.objects.filter(authors__name__icontains=query) | Paper.objects.filter(authors__surname__icontains=query)
+
+      else:
+        return Paper.objects.all()
+  
+  def get_report(self):
+    context = PaperListView().get_context_data(**kwargs)
+    context['filter'] = PaperFilter(
+    self.request.GET, queryset=self.get_queryset())
+
+    return render(request, "pdf.html", context)
+
+      
 class PaperDetailView(generic.DetailView):
   model = Paper
 
@@ -174,7 +195,18 @@ def report(request):
   # Designate model
   papers = Paper.objects.all()
 
-  for paper in papers:
+  def get_queryset(self):  # Filter results by input query.
+      query = self.request.GET.get('query', None)
+
+      if query:
+        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__icontains=query) | Paper.objects.filter(authors__name__icontains=query) | Paper.objects.filter(authors__surname__icontains=query)
+
+      else:
+        return Paper.objects.all()
+   
+
+  #query = PaperListView.get_queryset(Paper)
+  for paper in Paper.objects.filter(name__icontains="datalog"):
     lines.append(paper.name)
     lines.append("Author(s): ")
     for author in paper.authors.all():

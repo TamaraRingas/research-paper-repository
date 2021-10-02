@@ -9,7 +9,7 @@ class Author(models.Model):
     surname = models.CharField(max_length=50)
     researchGroup = models.ForeignKey('ResearchGroup', on_delete=models.SET_NULL, null=True)
     institution = models.CharField(max_length=100, blank=True)
-    papers = models.ManyToManyField('Paper')
+    papers = models.ManyToManyField('Paper', blank=True)
     
     # Order authors by their surnames.
     class Meta:

@@ -1,6 +1,48 @@
 from main.models import ResearchGroup
 from django.test import TestCase
-from models import Paper, Author
+from models import Paper, Author, ResearchGroup
+
+
+class ResearchGroupModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        ResearchGroup.objects.create(name='Ethics of AI')
+
+        def test_research_group_name(self):
+            research_group = ResearchGroup.objects.get(id=1)
+            field_label = research_group._meta.get_field('name').verbose_name
+            self.assertEquals(field_label, 'name')
+
+
+class AuthorModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Author.objects.create(name='Fabio')
+        Author.objects.create(surname='Tollon')
+        Author.objects.create(
+            papers='Artifacts and affordances: from designed properties to possibilities for action')
+
+        def test_author_name(self):
+            author = Author.objects.get(id=1)
+            field_label = author._meta.get_field('name').verbose_name
+            self.assertEquals(field_label, 'name')
+
+        def test_author_surname(self):
+            author = Author.objects.get(id=1)
+            field_label = author._meta.get_field('surname').verbose_name
+            self.assertEquals(field_label, 'surname')
+
+        def test_author_papers(self):
+            author = Author.objects.get(id=1)
+            author.authors.add(Author.objects.get(id=1))
+            count = Paper.objects.count()
+            self.assertEquals(count, 1)
+
+        def test_get_absolute_url(self):
+            author = Author.objects.get(id=1)
+            # This will also fail if the urlconf is not defined.
+            # Check that url for research paper is correct.
+            self.assertEquals(author.get_absolute_url(), '/main/authors/1')
 
 
 class PaperModelTest(TestCase):
@@ -65,45 +107,3 @@ class PaperModelTest(TestCase):
         # This will also fail if the urlconf is not defined.
         # Check that url for research paper is correct.
         self.assertEquals(paper.get_absolute_url(), '/main/papers/1')
-
-
-class AuthorModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        Author.objects.create(name='Fabio')
-        Author.objects.create(surname='Tollon')
-        Author.objects.create(
-            papers='Artifacts and affordances: from designed properties to possibilities for action')
-
-        def test_author_name(self):
-            author = Author.objects.get(id=1)
-            field_label = author._meta.get_field('name').verbose_name
-            self.assertEquals(field_label, 'name')
-
-        def test_author_surname(self):
-            author = Author.objects.get(id=1)
-            field_label = author._meta.get_field('surname').verbose_name
-            self.assertEquals(field_label, 'surname')
-
-        def test_author_papers(self):
-            author = Author.objects.get(id=1)
-            author.authors.add(Author.objects.get(id=1))
-            count = Paper.objects.count()
-            self.assertEquals(count, 1)
-
-        def test_get_absolute_url(self):
-            author = Author.objects.get(id=1)
-            # This will also fail if the urlconf is not defined.
-            # Check that url for research paper is correct.
-            self.assertEquals(author.get_absolute_url(), '/main/authors/1')
-
-
-class ResearchGroupModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        ResearchGroup.objects.create(name='Ethics of AI')
-
-        def test_research_group_name(self):
-            research_group = ResearchGroup.objects.get(id=1)
-            field_label = research_group._meta.get_field('name').verbose_name
-            self.assertEquals(field_label, 'name')
