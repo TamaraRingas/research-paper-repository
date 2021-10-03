@@ -34,6 +34,11 @@ class AddPaperFormTest(TestCase):
     self.assertTrue(form.fields['authors'].label ==
                     None or form.fields['authors'].label == 'Paper Authors')
 
+  def test_add_paper_form_research_group_field(self):
+    form = AddPaperForm()
+    self.assertTrue(form.fields['researchGroup'].label ==
+                    None or form.fields['researchGroup'].label == 'Paper Research Group')
+
   def test_add_paper_form_pdf_field(self):
     form = AddPaperForm()
     self.assertTrue(form.fields['pdf'].label ==
