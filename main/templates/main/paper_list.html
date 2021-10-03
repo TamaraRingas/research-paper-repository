@@ -35,9 +35,9 @@ Filter Research Papers
       <li><strong>Abstract: </strong>{{paper.abstract}}</li>
       <li><strong> <a
         href="https://cbib.s3.sa-east-1.amazonaws.com/{{paper.pdf}}"
-        download="download">Download </a></strong></li>  
+        download="download">Download Paper</a></strong></li> 
       {% if perms.main.peer_review %}
-      <li><strong>Proof of Peer Review: </strong>{{paper.peer_review}}</li> 
+      <li><strong>Proof of Peer Review: </strong><a href="https://cbib.s3.sa-east-1.amazonaws.com/media/peer_review.txt" download="download">Download Peer Review</a></li> 
       {% endif %} 
   </li>
   <br>
