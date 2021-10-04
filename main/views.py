@@ -187,12 +187,11 @@ def report(request):
   # Create a text object
   textob = c.beginText()
   textob.setTextOrigin(inch, inch)
-  textob.setFont('Helvetica', 20)
+  textob.setFont('Helvetica', 12)
 
   # Create blank list
   lines = []
   lines.append("Research Outcome Report ")
-  lines.append("The following papers meet the filtering criteria: ")
   lines.append(" ")
   # Designate model
   papers = Paper.objects.all()
@@ -206,9 +205,8 @@ def report(request):
       else:
         return Paper.objects.all()
    
-
   #query = PaperListView.get_queryset(Paper)
-  for paper in Paper.objects.filter(name__icontains="datalog"):
+  for paper in Paper.objects.all():
     lines.append(paper.name)
     lines.append("Author(s): ")
     for author in paper.authors.all():
