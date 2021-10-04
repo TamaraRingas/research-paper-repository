@@ -32,9 +32,19 @@ class AuthorModelTest(TestCase):
             field_label = author._meta.get_field('surname').verbose_name
             self.assertEquals(field_label, 'surname')
 
+        def test_author_researchGroup(self):
+            author = Author.objects.get(id=1)
+            field_label = author._meta.get_field('researchGroup').verbose_name
+            self.assertEquals(field_label, 'researchGroup')
+
+        def test_author_instituttion(self):
+            author = Author.objects.get(id=1)
+            field_label = author._meta.get_field('institution').verbose_name
+            self.assertEquals(field_label, 'institution')
+
         def test_author_papers(self):
             author = Author.objects.get(id=1)
-            author.authors.add(Author.objects.get(id=1))
+            author.papers.add(Author.objects.get(id=1))
             count = Paper.objects.count()
             self.assertEquals(count, 1)
 

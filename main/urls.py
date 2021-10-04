@@ -23,5 +23,6 @@ urlpatterns = [
          views.AuthorUpdate.as_view(), name='author_update'),
     path('author/<int:pk>/delete/',
          views.AuthorDelete.as_view(), name='author_delete'),
-    path('papers/report/', views.report, name='report')
+    path('papers/report/', views.report, name='report'),
+    path('signup/', views.signup_view, name="signup"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

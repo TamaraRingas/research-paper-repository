@@ -6,9 +6,11 @@ from django.views import generic
 from main.models import Paper, Author, ResearchGroup
 from .filters import PaperFilter
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from main.forms import AddPaperForm, AddAuthorForm
+from main.forms import AddPaperForm, AddAuthorForm, SignUpForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from itertools import chain
@@ -226,4 +228,18 @@ def report(request):
   return FileResponse(buf, as_attachment=True, filename='report.pdf')
 
 
+# View method to use signup form and display it to the user.
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('papers')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 

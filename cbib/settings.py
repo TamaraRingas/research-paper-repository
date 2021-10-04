@@ -152,3 +152,5 @@ AWS_STORAGE_BUCKET_NAME = 'cbib'
 AWS_QUERYSTRING_AUTH = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+DEFAULT_FROM_EMAIL = 'rngtam002@myuct.ac.za'
