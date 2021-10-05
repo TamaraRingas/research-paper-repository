@@ -52,7 +52,6 @@ class ResearchGroup(models.Model):
 
 class Paper(models.Model):
     """This class represents a research paper uploaded to our database, derived from the Model class."""
-
     name = models.CharField(max_length=100)
     abstract = models.TextField(max_length=5000)
     year = models.IntegerField()
@@ -66,13 +65,12 @@ class Paper(models.Model):
         default=' ', upload_to='media/', verbose_name="Proof of Peer Review", blank=True)
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
-    #author_list = Author.objects.all().order_by('surname')
-       
+               
     # Order research papers by year (descending) then by authors.
     class Meta:
         ordering = ['-year','authors__surname' ]
 
-        permissions = (("can_add_paper", "Add paper"),("can_modify_paper", "Modify Paper"), ("peer_review", "Peer Review"),)
+        permissions = (("can_add_paper", "Can add paper"),("can_modify_paper", "Modify Paper"), ("peer_review", "Peer Review"),)
 
     def get_absolute_url(self):
         """Returns the url to access a particular research paper."""
