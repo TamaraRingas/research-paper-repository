@@ -175,17 +175,7 @@ def report(request):
   # Designate model
   papers = Paper.objects.all()
 
-  def get_queryset(self):  # Filter results by input query.
-      query = self.request.GET.get('query', None)
-
-      if query:
-        return Paper.objects.filter(name__icontains=query) | Paper.objects.filter(venue__icontains=query) | Paper.objects.filter(year__contains=query) | Paper.objects.filter(institution__icontains=query) | Paper.objects.filter(research_group__icontains=query) | Paper.objects.filter(authors__name__icontains=query) | Paper.objects.filter(authors__surname__icontains=query)
-
-      else:
-        return Paper.objects.all()
-   
-  #query = PaperListView.get_queryset(Paper)
-  for paper in Paper.objects.all():
+  for paper in papers:
     lines.append(paper.name)
     lines.append("Author(s): ")
     for author in paper.authors.all():
@@ -193,7 +183,6 @@ def report(request):
     lines.append("Published in: " + str(paper.year))
     lines.append("Published by: " + paper.venue)
     lines.append(" ")
-
   for line in lines:
     textob.textLine(line)
 
