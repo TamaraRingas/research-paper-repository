@@ -1,0 +1,12 @@
+
+{% block content %}
+<h1>Research Paper List</h1>
+
+<ul>
+  {% for paper in filter %}
+  <li>
+    {{paper.name}}
+  <br>
+  {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{author.name}} {{ author.surname }} </h1>
+<a href="{% url 'author_update' pk=author.pk %}">Update Author</a>
+<br>
+<p>
+  <strong>Papers: </strong>
+  {% for paper in author.papers.all %}
+  {{paper.name}}, 
+  {% endfor %}
+</p>
+<p><strong>Institution: </strong>{{author.institution}}</p>
+<p><strong>Research Group: </strong>{{author.researchGroup}}</p>
+<a href="{% url 'author_delete' pk=author.pk %}">Delete Author</a>
+  {% endblock content %}

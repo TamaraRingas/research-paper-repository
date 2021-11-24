@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Author List</h1>
+
+{% if author_list %}
+<form action="." method="get">
+  <label for="query">Search Authors</label>
+  <input type="text" name="query" id="query">
+  <input type="submit" value="Search">
+</form>
+<ul>
+  {% for author in author_list %}
+  <li>
+    <a href="{{ author.get_absolute_url }}">{{ author.surname}}, {{ author.name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>There are no authors here yet.</p>
+{% endif %}
+{% endblock %}

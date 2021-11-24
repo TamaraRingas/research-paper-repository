@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% block title %}<title>CBIB</title>{% endblock %}
+<h1>CAIR Research Paper Management</h1>
+<p>Welcome to CBIB, the CAIR Research Paper Management WebApp</p>
+<p>The site has the following record counts:</p>
+<ul>
+  <li><strong>Papers:</strong> {{ num_papers }}</li>
+  <li><strong>Authors:</strong> {{ num_authors }}</li>
+</ul>
+{% endblock %}
