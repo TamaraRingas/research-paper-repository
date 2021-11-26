@@ -143,9 +143,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'AKIA4Q42GPLOG6QPXUFB'
+AWS_ACCESS_KEY_ID = '' #Insert access key ID here
 
-AWS_SECRET_ACCESS_KEY = 'dqCja0pO3wnwXG79vzoIXq7b1dBxsmiFQDe0vanv'
+AWS_SECRET_ACCESS_KEY = '' #Insert key here
 
 AWS_STORAGE_BUCKET_NAME = 'cbib'
 
